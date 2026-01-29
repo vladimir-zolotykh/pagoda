@@ -3,36 +3,33 @@
 # PYTHON_ARGCOMPLETE_OK
 
 
-Peg = list[int]
-NDISKS = 3
-from_: Peg = [*range(NDISKS, 0, -1)]
-to: Peg = []
-aux: Peg = []
+PegType = list[int]
+from_peg: PegType = []
+to_peg: PegType = []
+aux_peg: PegType = []
 
 
-def solve3():
+def _move(from_: PegType, to: PegType) -> None:
+    to.append(from_.pop())
+
+
+def solve(
+    ndisks: int, from_: PegType = from_peg, to: PegType = to_peg, aux: PegType = aux_peg
+) -> None:
     """
-    >>> solve3()
-    >>> from_
+    >>> from_peg[:] = [1]
+    >>> solve(1)
+    >>> from_peg
     []
-    >>> to
-    [3, 2, 1]
-    >>> aux
+    >>> aux_peg
     []
-    >>>
+    >>> to_peg
+    [1]
     """
-    ndisks = 3
-    from_[:] = [*range(ndisks, 0, -1)]
-    to[:] = []
-    aux[:] = []
-
-    to.append(from_.pop())
-    aux.append(from_.pop())
-    aux.append(to.pop())
-    to.append(from_.pop())
-    from_.append(aux.pop())
-    to.append(aux.pop())
-    to.append(from_.pop())
+    if ndisks == 1:
+        _move(from_, to)
+    else:
+        raise NotImplementedError(f"Don't know how to move {ndisks} disks")
 
 
 if __name__ == "__main__":
