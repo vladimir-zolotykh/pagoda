@@ -27,6 +27,25 @@ def solve1():
     _move(from_, to)
 
 
+def solve2():
+    """
+    >>> solve2()
+    >>> from_
+    []
+    >>> aux
+    []
+    >>> to
+    [2, 1]
+    """
+    from_[:] = [2, 1]
+    to[:] = []
+    aux[:] = []
+
+    _move(from_, aux)
+    _move(from_, to)
+    _move(aux, to)
+
+
 def solve3():
     """
     >>> solve3()
