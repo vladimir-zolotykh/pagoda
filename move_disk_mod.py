@@ -25,9 +25,23 @@ def solve(
     []
     >>> to_peg
     [1]
+    >>> from_peg[:] = [2, 1]
+    >>> to_peg[:] = []
+    >>> aux_peg[:] = []
+    >>> solve(2)
+    >>> from_peg
+    []
+    >>> aux_peg
+    []
+    >>> to_peg
+    [2, 1]
     """
     if ndisks == 1:
         _move(from_, to)
+    elif ndisks == 2:
+        _move(from_, aux)
+        _move(from_, to)
+        _move(aux, to)
     else:
         raise NotImplementedError(f"Don't know how to move {ndisks} disks")
 
