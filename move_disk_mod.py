@@ -42,6 +42,42 @@ def solve3():
         _move(tup[0], tup[1])
 
 
+def solve4():
+    """
+    >>> solve4()
+    >>> from_
+    []
+    >>> to
+    [4, 3, 2, 1]
+    >>> aux
+    []
+    >>>
+    """
+    ndisks = 4
+    from_[:] = [*range(ndisks, 0, -1)]
+    to[:] = []
+    aux[:] = []
+
+    for tup in (
+        (from_, aux),
+        (from_, to),
+        (aux, to),
+        (from_, aux),
+        (to, from_),
+        (to, aux),
+        (from_, aux),
+        (from_, to),
+        (aux, to),
+        (aux, from_),
+        (to, from_),
+        (aux, to),
+        (from_, aux),
+        (from_, to),
+        (aux, to),
+    ):
+        _move(tup[0], tup[1])
+
+
 if __name__ == "__main__":
     import doctest
 
