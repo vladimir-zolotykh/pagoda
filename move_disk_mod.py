@@ -46,6 +46,30 @@ def solve2():
     _move(aux, to)
 
 
+def solve3_2():
+    """
+    >>> solve3()
+    >>> from_
+    []
+    >>> to
+    [3, 2, 1]
+    >>> aux
+    []
+    >>>
+    """
+    ndisks = 3
+    from_[:] = [*range(ndisks, 0, -1)]
+    to[:] = []
+    aux[:] = []
+    solve2()
+    _move(from_, aux)
+    _move(to, aux)
+    _move(to, from_)
+    _move(aux, from_)
+    _move(aux, to)
+    solve2()
+
+
 def solve3():
     """
     >>> solve3()
