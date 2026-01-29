@@ -14,6 +14,19 @@ def _move(from_: Peg, to: Peg) -> None:
     to.append(from_.pop())
 
 
+def solve1():
+    """
+    >>> solve1()
+    >>> to
+    [1]
+    """
+    from_[:] = [1]
+    to[:] = []
+    aux[:] = []
+
+    _move(from_, to)
+
+
 def solve3():
     """
     >>> solve3()
