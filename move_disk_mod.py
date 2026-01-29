@@ -30,13 +30,16 @@ def solve3():
     to[:] = []
     aux[:] = []
 
-    _move(from_, to)
-    _move(from_, aux)
-    _move(to, aux)
-    _move(from_, to)
-    _move(aux, from_)
-    _move(aux, to)
-    _move(from_, to)
+    for tup in (
+        (from_, to),
+        (from_, aux),
+        (to, aux),
+        (from_, to),
+        (aux, from_),
+        (aux, to),
+        (from_, to),
+    ):
+        _move(tup[0], tup[1])
 
 
 if __name__ == "__main__":
