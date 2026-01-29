@@ -78,6 +78,58 @@ def solve4():
         _move(tup[0], tup[1])
 
 
+def solve5():
+    """
+    >>> solve5()
+    >>> from_
+    []
+    >>> to
+    [5, 4, 3, 2, 1]
+    >>> aux
+    []
+    >>>
+    """
+    ndisks = 5
+    from_[:] = [*range(ndisks, 0, -1)]
+    to[:] = []
+    aux[:] = []
+
+    for tup in (
+        (from_, to),
+        (from_, aux),
+        (to, aux),
+        (from_, to),
+        (aux, from_),
+        (aux, to),
+        (from_, to),
+        (from_, aux),
+        (to, aux),
+        (to, from_),
+        (aux, from_),
+        (to, aux),
+        (from_, to),
+        (from_, aux),
+        (to, aux),
+        (from_, to),
+        (aux, from_),
+        (aux, to),
+        (from_, to),
+        (aux, from_),
+        (to, aux),
+        (to, from_),
+        (aux, from_),
+        (aux, to),
+        (from_, to),
+        (from_, aux),
+        (to, aux),
+        (from_, to),
+        (aux, from_),
+        (aux, to),
+        (from_, to),
+    ):
+        _move(tup[0], tup[1])
+
+
 if __name__ == "__main__":
     import doctest
 
