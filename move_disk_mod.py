@@ -10,7 +10,10 @@ aux_peg: PegType = []
 
 
 def _move(from_: PegType, to: PegType) -> None:
-    to.append(from_.pop())
+    d: int = from_.pop()
+    if to:
+        assert d < to[-1], f"Can't put {d} on top of {to[-1]}"
+    to.append(d)
 
 
 def solve(
