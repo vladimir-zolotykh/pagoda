@@ -10,6 +10,10 @@ to: Peg = []
 aux: Peg = []
 
 
+def _move(from_: Peg, to: Peg) -> None:
+    to.append(from_.pop())
+
+
 def solve3():
     """
     >>> solve3()
@@ -26,13 +30,13 @@ def solve3():
     to[:] = []
     aux[:] = []
 
-    to.append(from_.pop())
-    aux.append(from_.pop())
-    aux.append(to.pop())
-    to.append(from_.pop())
-    from_.append(aux.pop())
-    to.append(aux.pop())
-    to.append(from_.pop())
+    _move(from_, to)
+    _move(from_, aux)
+    _move(to, aux)
+    _move(from_, to)
+    _move(aux, from_)
+    _move(aux, to)
+    _move(from_, to)
 
 
 if __name__ == "__main__":
