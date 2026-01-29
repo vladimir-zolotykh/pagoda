@@ -51,6 +51,17 @@ def solve(
     >>> to_peg
     [3, 2, 1]
 
+    # solve(4)
+    >>> from_peg[:] = [4, 3, 2, 1]
+    >>> to_peg[:] = []
+    >>> aux_peg[:] = []
+    >>> solve(4)
+    >>> from_peg
+    []
+    >>> aux_peg
+    []
+    >>> to_peg
+    [4, 3, 2, 1]
     """
     if ndisks == 1:
         _move(from_, to)
@@ -59,6 +70,10 @@ def solve(
         _move(from_, to)
         _move(aux, to)
     elif ndisks == 3:
+        solve(ndisks - 1, from_, aux)
+        _move(from_, to)
+        solve(ndisks - 1, aux, to)
+    elif ndisks == 4:
         solve(ndisks - 1, from_, aux)
         _move(from_, to)
         solve(ndisks - 1, aux, to)
