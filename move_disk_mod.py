@@ -9,30 +9,39 @@ from_: Peg = [*range(NDISKS, 0, -1)]
 to: Peg = []
 aux: Peg = []
 
+PEGS = {
+    "A": [3, 2, 1],
+    "B": [],
+    "C": [],
+}
+
+
+def move(from_, to, pegs=PEGS):
+    src, dst = pegs[from_], pegs[to]
+    if dst and src[-1] > dst[-1]:
+        raise ValueError(f"Cannot place {src[-1]} on top {dst[-1]}")
+    disk = src.pop()
+    dst.append(disk)
+
 
 def solve3():
     """
     >>> solve3()
-    >>> from_
+    >>> PEGS["A"]
     []
-    >>> to
+    >>> PEGS["C"]
     [3, 2, 1]
-    >>> aux
+    >>> PEGS["B"]
     []
     >>>
     """
-    ndisks = 3
-    from_[:] = [*range(ndisks, 0, -1)]
-    to[:] = []
-    aux[:] = []
-
-    to.append(from_.pop())
-    aux.append(from_.pop())
-    aux.append(to.pop())
-    to.append(from_.pop())
-    from_.append(aux.pop())
-    to.append(aux.pop())
-    to.append(from_.pop())
+    move("A", "C")
+    move("A", "B")
+    move("C", "B")
+    move("A", "C")
+    move("B", "A")
+    move("B", "C")
+    move("A", "C")
 
 
 if __name__ == "__main__":
