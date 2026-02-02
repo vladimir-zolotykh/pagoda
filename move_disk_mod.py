@@ -21,10 +21,12 @@ class Pegs(UserDict):
         dst.append(disk)
 
 
-def solve3(pegs: Pegs) -> Pegs:
+def solve3(
+    ndisks: int, pegs: Pegs, from_: str = "A", to: str = "C", aux: str = "B"
+) -> None:
     """
     >>> pegs = Pegs(3)
-    >>> solve3(pegs)
+    >>> solve3(3, pegs, "A", "C", "B")
     >>> pegs["A"]
     []
     >>> pegs["C"]
@@ -33,13 +35,16 @@ def solve3(pegs: Pegs) -> Pegs:
     []
     >>>
     """
-    pegs.move("A", "C")
-    pegs.move("A", "B")
-    pegs.move("C", "B")
-    pegs.move("A", "C")
-    pegs.move("B", "A")
-    pegs.move("B", "C")
-    pegs.move("A", "C")
+    pegs3 = {"A", "B", "C"}
+    pegs3 -= {from_, to}
+    assert aux == next(iter(pegs3)), f"'aux' must be {aux}"
+    pegs.move(from_, to)
+    pegs.move(from_, aux)
+    pegs.move(to, aux)
+    pegs.move(from_, to)
+    pegs.move(aux, from_)
+    pegs.move(aux, to)
+    pegs.move(from_, to)
 
 
 if __name__ == "__main__":
