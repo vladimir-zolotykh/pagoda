@@ -20,13 +20,17 @@ class Pegs(UserDict):
         disk = src.pop()
         dst.append(disk)
 
-    def move_stack(self, ndisks, from_, to, aux):
-        if ndisks == 1:
-            self.move(from_, to)
+    def move_stack(self, ndisks):
+        if ndisks <= 1:
+            self.move("A", "C")
         elif ndisks == 2:
-            self.move_stack()
+            self.move("A", "B")
+            self.move("A", "C")
+            self.move("B", "C")
         else:
-            self.move_stack()
+            self.move_stack(ndisks - 1, from_="A", to="B", aux="C")
+            self.move("A", "C")
+            self.move_stack(ndisks - 1, from_="B", to="C", aux="A")
 
 
 def solve(ndisks: int) -> Pegs:
