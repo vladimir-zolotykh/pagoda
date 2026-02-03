@@ -5,6 +5,30 @@ from collections import UserDict
 
 
 class Pegs(UserDict):
+    """
+    >>> pegs = Pegs(2)
+    >>> pegs
+    {'A': [2, 1], 'B': [], 'C': []}
+    >>> pegs.move_stack(2, "A", "C")
+    >>> pegs
+    {'A': [], 'B': [], 'C': [2, 1]}
+
+    >>> pegs = Pegs(3)
+    >>> pegs
+    {'A': [3, 2, 1], 'B': [], 'C': []}
+    >>> pegs.move_stack(3, "A", "C")
+    >>> pegs
+    {'A': [], 'B': [], 'C': [3, 2, 1]}
+
+    >>> pegs = Pegs(4)
+    >>> pegs
+    {'A': [4, 3, 2, 1], 'B': [], 'C': []}
+    >>> pegs.move_stack(4, "A", "C")
+    >>> pegs
+    {'A': [], 'B': [], 'C': [4, 3, 2, 1]}
+
+    """
+
     def __init__(self, ndisks):
         data = {
             "A": list(range(ndisks, 0, -1)),
@@ -20,17 +44,18 @@ class Pegs(UserDict):
         disk = src.pop()
         dst.append(disk)
 
-    def move_stack(self, ndisks):
+    def move_stack(self, ndisks: int, from_: str, to: str):
+        aux = next(iter({"A", "B", "C"} - {from_, to}))
         if ndisks <= 1:
-            self.move("A", "C")
+            self.move(from_, to)
         elif ndisks == 2:
-            self.move("A", "B")
-            self.move("A", "C")
-            self.move("B", "C")
+            self.move(from_, aux)
+            self.move(from_, to)
+            self.move(aux, to)
         else:
-            self.move_stack(ndisks - 1, from_="A", to="B", aux="C")
-            self.move("A", "C")
-            self.move_stack(ndisks - 1, from_="B", to="C", aux="A")
+            self.move_stack(ndisks - 1, from_=from_, to=aux)
+            self.move(from_, to)
+            self.move_stack(ndisks - 1, from_=aux, to=to)
 
 
 def solve(ndisks: int) -> Pegs:
@@ -47,21 +72,17 @@ def solve(ndisks: int) -> Pegs:
     if ndisks == 1:
         pegs.move("A", "C")
     elif ndisks == 2:
-        pegs.move("A", "B")
-        pegs.move("A", "C")
-        pegs.move("B", "C")
+        pegs.move_stack(2, "A", "C")
     elif ndisks == 3:
+        nm1 = ndisks - 1
+        pegs.move_stack(nm1, "A", "B")
         pegs.move("A", "C")
-        pegs.move("A", "B")
-        pegs.move("C", "B")
-        pegs.move("A", "C")
-        pegs.move("B", "A")
-        pegs.move("B", "C")
-        pegs.move("A", "C")
+        pegs.move_stack(nm1, "B", "C")
     elif ndisks == 4:
-        pegs.move_stack(3, "A", "B", aux="C")
+        nm1 = ndisks - 1
+        pegs.move_stack(nm1, "A", "B")
         pegs.move("A", "C")
-        pegs.move_stack(3, "B", "C", aux="A")
+        pegs.move_stack(nm1, "B", "C")
     else:
         raise ValueError(f"solve({ndisks}) not implemented")
     return pegs
