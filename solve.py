@@ -83,22 +83,7 @@ def solve(ndisks: int) -> Pegs:
     """
     pegs = Pegs(ndisks)
 
-    if ndisks == 1:
-        pegs.move("A", "C")
-    elif ndisks == 2:
-        pegs.move_stack(2, "A", "C")
-    elif ndisks == 3:
-        nm1 = ndisks - 1
-        pegs.move_stack(nm1, "A", "B")
-        pegs.move("A", "C")
-        pegs.move_stack(nm1, "B", "C")
-    elif ndisks == 4:
-        nm1 = ndisks - 1
-        pegs.move_stack(nm1, "A", "B")
-        pegs.move("A", "C")
-        pegs.move_stack(nm1, "B", "C")
-    else:
-        raise ValueError(f"solve({ndisks}) not implemented")
+    pegs.move_stack(ndisks, "A", "C")
     return pegs
 
 
