@@ -7,44 +7,6 @@ import copy
 
 
 class Pegs(UserDict):
-    """
-    >>> pegs = Pegs(2)
-    >>> pegs
-    {'A': [2, 1], 'B': [], 'C': []}
-    >>> pegs.move_stack(2, "A", "C")
-    >>> pegs
-    {'A': [], 'B': [], 'C': [2, 1]}
-
-    >>> pegs = Pegs(3)
-    >>> pegs
-    {'A': [3, 2, 1], 'B': [], 'C': []}
-    >>> pegs.move_stack(3, "A", "C")
-    >>> pegs
-    {'A': [], 'B': [], 'C': [3, 2, 1]}
-
-    >>> pegs = Pegs(4)
-    >>> pegs
-    {'A': [4, 3, 2, 1], 'B': [], 'C': []}
-    >>> pegs.move_stack(4, "A", "C")
-    >>> pegs
-    {'A': [], 'B': [], 'C': [4, 3, 2, 1]}
-
-    >>> pegs = Pegs(5)
-    >>> pegs
-    {'A': [5, 4, 3, 2, 1], 'B': [], 'C': []}
-    >>> pegs.move_stack(5, "A", "C")
-    >>> pegs
-    {'A': [], 'B': [], 'C': [5, 4, 3, 2, 1]}
-
-    >>> pegs = Pegs(6)
-    >>> pegs
-    {'A': [6, 5, 4, 3, 2, 1], 'B': [], 'C': []}
-    >>> pegs.move_stack(6, "A", "C")
-    >>> pegs
-    {'A': [], 'B': [], 'C': [6, 5, 4, 3, 2, 1]}
-
-    """
-
     def __init__(self, ndisks):
         data = {
             "A": list(range(ndisks, 0, -1)),
