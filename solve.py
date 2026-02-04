@@ -52,6 +52,7 @@ class Pegs(UserDict):
             "C": [],
         }
         super().__init__(data)
+        self.nsteps = 0
 
     def move(self, from_, to):
         src, dst = self.data[from_], self.data[to]
@@ -59,6 +60,7 @@ class Pegs(UserDict):
             raise ValueError(f"Cannot place {src[-1]} on top {dst[-1]}")
         disk = src.pop()
         dst.append(disk)
+        self.nsteps += 1
 
     def move_stack(self, ndisks: int, from_: str, to: str):
         aux = next(iter({"A", "B", "C"} - {from_, to}))
@@ -75,18 +77,21 @@ class Pegs(UserDict):
 
 
 # def solve(ndisks: int) -> Pegs:
-def solve(pegs: Pegs) -> None:
+def solve(pegs: Pegs) -> int:
     pegs.move_stack(len(pegs["A"]), "A", "C")
+    return pegs.nsteps
 
 
 class TestSolve(unittest.TestCase):
 
     def test_solve10(self):
+        expected_nsteps = {1: 1, 2: 3, 3: 7, 4: 15, 5: 31, 6: 63, 7: 127, 8: 255}
         for ndisks in range(1, 9):
             pegs = Pegs(ndisks)
             result = copy.copy(pegs["A"])
-            solve(pegs)
+            nsteps = solve(pegs)
             self.assertEqual(pegs, {"A": [], "B": [], "C": result})
+            self.assertEqual(nsteps, expected_nsteps[ndisks])
 
 
 if __name__ == "__main__":
