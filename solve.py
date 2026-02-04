@@ -38,7 +38,6 @@ class Pegs(UserDict):
             self.move_stack(ndisks - 1, from_=aux, to=to)
 
 
-# def solve(ndisks: int) -> Pegs:
 def solve(pegs: Pegs) -> int:
     pegs.move_stack(len(pegs["A"]), "A", "C")
     return pegs.nsteps
