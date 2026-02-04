@@ -27,6 +27,13 @@ class Pegs(UserDict):
     >>> pegs
     {'A': [], 'B': [], 'C': [4, 3, 2, 1]}
 
+    >>> pegs = Pegs(5)
+    >>> pegs
+    {'A': [5, 4, 3, 2, 1], 'B': [], 'C': []}
+    >>> pegs.move_stack(5, "A", "C")
+    >>> pegs
+    {'A': [], 'B': [], 'C': [5, 4, 3, 2, 1]}
+
     """
 
     def __init__(self, ndisks):
