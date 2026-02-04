@@ -3,6 +3,7 @@
 # PYTHON_ARGCOMPLETE_OK
 from collections import UserDict
 import unittest
+import copy
 
 
 class Pegs(UserDict):
@@ -73,30 +74,19 @@ class Pegs(UserDict):
             self.move_stack(ndisks - 1, from_=aux, to=to)
 
 
-def solve(ndisks: int) -> Pegs:
-    """
-    >>> solve(1)
-    {'A': [], 'B': [], 'C': [1]}
-    >>> solve(2)
-    {'A': [], 'B': [], 'C': [2, 1]}
-    >>> solve(3)
-    {'A': [], 'B': [], 'C': [3, 2, 1]}
-    >>> solve(4)
-    {'A': [], 'B': [], 'C': [4, 3, 2, 1]}
-
-    """
-    pegs = Pegs(ndisks)
-
-    pegs.move_stack(ndisks, "A", "C")
-    return pegs
+# def solve(ndisks: int) -> Pegs:
+def solve(pegs: Pegs) -> None:
+    pegs.move_stack(len(pegs["A"]), "A", "C")
 
 
 class TestSolve(unittest.TestCase):
 
     def test_solve10(self):
         for ndisks in range(1, 9):
-            res = solve(ndisks)
-            self.assertEqual(res, {"A": [], "B": [], "C": list(range(ndisks, 0, -1))})
+            pegs = Pegs(ndisks)
+            result = copy.copy(pegs["A"])
+            solve(pegs)
+            self.assertEqual(pegs, {"A": [], "B": [], "C": result})
 
 
 if __name__ == "__main__":
