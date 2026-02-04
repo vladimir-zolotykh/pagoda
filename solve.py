@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 # PYTHON_ARGCOMPLETE_OK
 from collections import UserDict
+import unittest
 
 
 class Pegs(UserDict):
@@ -90,7 +91,13 @@ def solve(ndisks: int) -> Pegs:
     return pegs
 
 
-if __name__ == "__main__":
-    import doctest
+class TestSolve(unittest.TestCase):
 
-    doctest.testmod()
+    def test_solve10(self):
+        for ndisks in range(1, 9):
+            res = solve(ndisks)
+            self.assertEqual(res, {"A": [], "B": [], "C": list(range(ndisks, 0, -1))})
+
+
+if __name__ == "__main__":
+    unittest.main()
