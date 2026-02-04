@@ -80,6 +80,9 @@ def solve(ndisks: int) -> Pegs:
     {'A': [], 'B': [], 'C': [2, 1]}
     >>> solve(3)
     {'A': [], 'B': [], 'C': [3, 2, 1]}
+    >>> solve(4)
+    {'A': [], 'B': [], 'C': [4, 3, 2, 1]}
+
     """
     pegs = Pegs(ndisks)
 
