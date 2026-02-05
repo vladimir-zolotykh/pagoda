@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tower of Hanoi</title>
+    </head>
+    <body>
+        <h1>Tower of Hanoi</h1>
+
+        <table border="1" cellpadding="10">
+            <tr>
+                {% for peg in state %}
+                <td>
+                    {% for disk in peg reversed %}
+                    <div>[{{ disk }}]</div>
+                    {% endfor %}
+                </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Peg 0</td><td>Peg 1</td><td>Peg 2</td>
+            </tr>
+        </table>
+
+        <form method="post">
+            {% csrf_token %}
+            <label>Move from:
+                <select name="src">
+                    <option value="0">Peg 0</option>
+                    <option value="1">Peg 1</option>
+                    <option value="2">Peg 2</option>
+                </select>
+            </label>
+            <label>to:
+                <select name="dst">
+                    <option value="0">Peg 0</option>
+                    <option value="1">Peg 1</option>
+                    <option value="2">Peg 2</option>
+                </select>
+            </label>
+            <button type="submit">Move</button>
+        </form>
+
+        <p><a href="{% url 'reset' %}">Reset Game</a></p>
+        <p>Goal: Move all disks to Peg 2.</p>
+    </body>
+</html>
