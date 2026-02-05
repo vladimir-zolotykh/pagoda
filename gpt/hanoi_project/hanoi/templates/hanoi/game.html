@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tower of Hanoi</title>
+        <style>
+         body { font-family: serif; }
+         .peg { display: inline-block; width: 120px; vertical-align: top; }
+         .disk { border: 1px solid black; margin: 2px; text-align: center; }
+        </style>
+    </head>
+    <body>
+
+        <h1>Tower of Hanoi</h1>
+
+        {% if message %}
+        <p><strong>{{ message }}</strong></p>
+        {% endif %}
+
+        {% if won %}
+        <p><strong>You have solved the puzzle.</strong></p>
+        {% endif %}
+
+        <div>
+            {% for peg, disks in pegs.items %}
+            <div class="peg">
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="peg" value="{{ peg }}">
+                    <button type="submit">
+                        Peg {{ peg }}
+                        {% if selected == peg %}(selected){% endif %}
+                    </button>
+                </form>
+
+                {% for disk in disks reversed %}
+                <div class="disk">
+                    Disk {{ disk }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <p>
+            <a href="{% url 'reset' %}">Reset</a>
+        </p>
+
+        <p>
+            Click once to select a source peg, click again to choose destination.
+        </p>
+
+    </body>
+</html>
