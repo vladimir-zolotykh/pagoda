@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tower of Hanoi</title>
+    <style>
+        .towers { display: flex; justify-content: space-around; }
+        .tower { border-bottom: 2px solid black; width: 200px; text-align: center; position: relative; height: 200px; }
+        .disk { margin: 0 auto 2px; height: 20px; background-color: blue; color: white; text-align: center; }
+    </style>
+</head>
+<body>
+    <h1>Tower of Hanoi</h1>
+    <p>Moves: {{ moves }}</p>
+    {% if message %}<p>{{ message }}</p>{% endif %}
+    {% if win %}
+        <p>Congratulations! You won in {{ moves }} moves. Minimum moves: 15.</p>
+    {% else %}
+        <div class="towers">
+            {% for label, tower in towers.items %}
+                <div class="tower">
+                    <p>{{ label }}</p>
+                    {% for disk in tower|dictsortreversed:"0" %}  <!-- Bottom-up display -->
+                        <div class="disk" style="width: {{ disk|add:disk|add:50 }}px;">{{ disk }}</div>  <!-- Width proportional to size -->
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+        <form method="post" action="{% url 'game' %}">
+            {% csrf_token %}
+            <label>From:</label>
+            <select name="from_tower">
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+            </select>
+            <label>To:</label>
+            <select name="to_tower">
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+            </select>
+            <button type="submit">Move</button>
+        </form>
+    {% endif %}
+    <form method="post" action="{% url 'reset' %}">
+        {% csrf_token %}
+        <button type="submit">Reset</button>
+    </form>
+</body>
+</html>
