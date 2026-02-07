@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tower of Hanoi</title>
+        <style>
+         body { font-family: serif; }
+         label { display: block; margin: 8px 0; }
+        </style>
+    </head>
+    <body>
+
+        <h1>Tower of Hanoi</h1>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <label>
+                Number of disks (3–8):
+                <input type="number" name="n" min="3" max="8" value="3">
+            </label>
+
+            <label>
+                Delay between moves (ms):
+                <input type="number" name="delay" min="0" value="500">
+            </label>
+
+            <button type="submit">Start</button>
+        </form>
+
+    </body>
+</html>

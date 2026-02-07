@@ -2,6 +2,9 @@
 <html>
     <head>
         <title>Tower of Hanoi</title>
+        {% if running %}
+        <meta http-equiv="refresh" content="0.1">
+        {% endif %}
         <style>
          body { font-family: serif; }
          .peg { display: inline-block; width: 120px; vertical-align: top; }
@@ -23,14 +26,7 @@
         <div>
             {% for peg, disks in pegs.items %}
             <div class="peg">
-                <form method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="peg" value="{{ peg }}">
-                    <button type="submit">
-                        Peg {{ peg }}
-                        {% if selected == peg %}(selected){% endif %}
-                    </button>
-                </form>
+                <strong>Peg {{ peg }}</strong>
 
                 {% for disk in disks reversed %}
                 <div class="disk">
@@ -46,7 +42,7 @@
         </p>
 
         <p>
-            Click once to select a source peg, click again to choose destination.
+            Automatic solution using a Python generator.
         </p>
 
     </body>
