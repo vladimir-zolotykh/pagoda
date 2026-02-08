@@ -24,22 +24,16 @@ class Pegs(UserDict):
         dst.append(disk)
         self.nsteps += 1
 
-    def move_stack(self, ndisks: int, from_: str, to: str):
-        aux = next(iter({"A", "B", "C"} - {from_, to}))
-        if ndisks <= 1:
-            self.move(from_, to)
-        elif ndisks == 2:
-            self.move(from_, aux)
-            self.move(from_, to)
-            self.move(aux, to)
-        else:
-            self.move_stack(ndisks - 1, from_=from_, to=aux)
-            self.move(from_, to)
-            self.move_stack(ndisks - 1, from_=aux, to=to)
+    def solve(self, ndisks: int, from_: str, aux: str, to: str):
+        if ndisks == 0:
+            return
+        self.solve(ndisks - 1, from_, to, aux)
+        self.move(from_, to)
+        self.solve(ndisks - 1, aux, from_, to)
 
 
 def solve(pegs: Pegs) -> int:
-    pegs.move_stack(len(pegs["A"]), "A", "C")
+    pegs.solve(len(pegs["A"]), "A", "B", "C")
     return pegs.nsteps
 
 
