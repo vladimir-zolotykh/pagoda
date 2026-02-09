@@ -1,5 +1,6 @@
 import time
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 
 PEGS = ["A", "B", "C"]
 MIN_DISKS = 3
@@ -26,6 +27,39 @@ def init_game(request, n, delay):
     request.session["step"] = 0
 
 
+def step_game(request):
+    if "pegs" not in request.session:
+        return JsonResponse({"error": "No game"}, status=400)
+
+    pegs = request.session["pegs"]
+    moves = request.session["moves"]
+    step = request.session["step"]
+    n = request.session["n"]
+
+    if step < len(moves):
+        src, dst = moves[step]
+        disk = pegs[src].pop()
+        pegs[dst].append(disk)
+
+        request.session["step"] = step + 1
+        request.session["pegs"] = pegs
+
+        done = False
+    else:
+        done = True
+
+    won = len(pegs["C"]) == n
+
+    return JsonResponse(
+        {
+            "pegs": pegs,
+            "step": request.session["step"],
+            "done": done,
+            "won": won,
+        }
+    )
+
+
 def start(request):
     if request.method == "POST":
         n = int(request.POST.get("n", 3))
@@ -44,38 +78,12 @@ def game(request):
     if "pegs" not in request.session:
         return redirect("start")
 
-    pegs = request.session["pegs"]
-    moves = request.session["moves"]
-    step = request.session["step"]
-    delay = request.session["delay"]
-
-    message = ""
-
-    if step < len(moves):
-        src, dst = moves[step]
-
-        disk = pegs[src].pop()
-        pegs[dst].append(disk)
-
-        request.session["step"] = step + 1
-        request.session["pegs"] = pegs
-
-        # server-side delay (milliseconds)
-        time.sleep(delay / 1000.0)
-    else:
-        message = "Solved."
-
-    won = len(pegs["C"]) == request.session["n"]
-
     return render(
         request,
         "hanoi/game.html",
         {
-            "pegs": pegs,
-            "message": message,
-            "won": won,
-            "delay": delay,
-            "running": step < len(moves),
+            "pegs": request.session["pegs"],
+            "delay": request.session["delay"],
         },
     )
 

@@ -2,9 +2,6 @@
 <html>
     <head>
         <title>Tower of Hanoi</title>
-        {% if running %}
-        <meta http-equiv="refresh" content="0.1">
-        {% endif %}
         <style>
          body { font-family: serif; }
          .peg { display: inline-block; width: 120px; vertical-align: top; }
@@ -15,27 +12,7 @@
 
         <h1>Tower of Hanoi</h1>
 
-        {% if message %}
-        <p><strong>{{ message }}</strong></p>
-        {% endif %}
-
-        {% if won %}
-        <p><strong>You have solved the puzzle.</strong></p>
-        {% endif %}
-
-        <div>
-            {% for peg, disks in pegs.items %}
-            <div class="peg">
-                <strong>Peg {{ peg }}</strong>
-
-                {% for disk in disks reversed %}
-                <div class="disk">
-                    Disk {{ disk }}
-                </div>
-                {% endfor %}
-            </div>
-            {% endfor %}
-        </div>
+        <div id="board"></div>
 
         <p>
             <a href="{% url 'reset' %}">Reset</a>
@@ -44,6 +21,43 @@
         <p>
             Automatic solution using a Python generator.
         </p>
+
+        <script>
+         const delay = {{ delay }};
+         const board = document.getElementById("board");
+
+         function render(pegs) {
+             board.innerHTML = "";
+             for (const peg in pegs) {
+                 const pegDiv = document.createElement("div");
+                 pegDiv.className = "peg";
+                 pegDiv.innerHTML = "<strong>Peg " + peg + "</strong>";
+
+                 [...pegs[peg]].reverse().forEach(disk => {
+                     const d = document.createElement("div");
+                     d.className = "disk";
+                     d.textContent = "Disk " + disk;
+                     pegDiv.appendChild(d);
+                 });
+
+                 board.appendChild(pegDiv);
+             }
+         }
+
+         function step() {
+             fetch("{% url 'step_game' %}")
+                 .then(r => r.json())
+                 .then(data => {
+                     render(data.pegs);
+
+                     if (!data.done) {
+                         setTimeout(step, delay);
+                     }
+                 });
+         }
+
+         step();
+        </script>
 
     </body>
 </html>
